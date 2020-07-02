@@ -54,7 +54,7 @@
                   </div>
                 </div>
                 <div class="layui-form-item">
-                  <button type="button" class="layui-btn">提交</button>
+                  <button type="button" class="layui-btn" @click="submit">提交</button>
                 </div>
               </form>
             </div>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { getCode } from '@/api/login'
+import { getCode, forget } from '@/api/login'
 
 export default {
   name: 'Forget',
@@ -85,6 +85,24 @@ export default {
       getCode().then((res) => {
         if (res.code === 200) {
           this.svg = res.data
+        }
+      })
+    },
+    submit () {
+      this.$validator.validateAll({
+        username: this.username,
+        code: this.code
+      }).then(valid => {
+        if (valid === true) {
+          forget({
+            username: this.username,
+            code: this.code
+          }).then((res) => {
+            console.log(res)
+            if (res.code === 200) {
+              alert('邮件发送成功')
+            }
+          })
         }
       })
     }

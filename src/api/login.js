@@ -12,3 +12,18 @@ export const getCode = async () => {
   }
   return result
 }
+
+export const forget = async option => {
+  let result = ''
+  try {
+    result = await axios.post('/forget', {
+      ...option
+    })
+    if (result.status === 200) {
+      return result.data
+    }
+  } catch (e) {
+    console.error(e)
+  }
+  return result
+}
