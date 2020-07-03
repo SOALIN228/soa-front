@@ -13,103 +13,109 @@
             <div class="layui-form layui-form-pane">
               <form method="post">
                 <div class="layui-form-item">
-                  <div class="layui-row">
-                    <label for="S_username" class="layui-form-label">用户名</label>
-                    <div class="layui-input-inline">
-                      <input type="text"
-                             id="S_username"
-                             name="username"
-                             v-model="username"
-                             v-validate="'required|email'"
-                             placeholder="请输入用户名"
-                             autocomplete="off"
-                             class="layui-input"
-                      />
+                  <validation-provider name="email" rules="required|email" v-slot="{errors}">
+                    <div class="layui-row">
+                      <label for="S_username" class="layui-form-label">用户名</label>
+                      <div class="layui-input-inline">
+                        <input type="text"
+                               id="S_username"
+                               name="username"
+                               v-model="username"
+                               placeholder="请输入用户名"
+                               autocomplete="off"
+                               class="layui-input"
+                        />
+                      </div>
+                      <div class="layui-form-mid layui-word-aux">将会成为您唯一的登入名</div>
                     </div>
-                    <div class="layui-form-mid layui-word-aux">将会成为您唯一的登入名</div>
-                  </div>
-                  <div class="layui-row">
-                    <span style="color: #c00;">{{errors.first('username')}}</span>
-                  </div>
+                    <div class="layui-row">
+                      <span style="color: #c00;">{{errors[0]}}</span>
+                    </div>
+                  </validation-provider>
                 </div>
                 <div class="layui-form-item">
                   <label for="S_name" class="layui-form-label">昵称</label>
-                  <div class="layui-input-inline">
-                    <input type="text"
-                           id="S_name"
-                           name="name"
-                           v-model="name"
-                           v-validate="'required|min:4'"
-                           placeholder="请输入昵称"
-                           autocomplete="off"
-                           class="layui-input"
-                    />
-                  </div>
-                  <div class="layui-form-mid">
-                    <span style="color: #c00;">{{errors.first('name')}}</span>
-                  </div>
-                </div>
-                <div class="layui-form-item">
-                  <div class="layui-row">
-                    <label for="S_password" class="layui-form-label">密码</label>
-                    <div class="layui-input-inline">
-                      <input type="password"
-                             id="S_password"
-                             name="password"
-                             v-model="password"
-                             ref="password"
-                             v-validate="'required|min:6|max:16'"
-                             placeholder="请输入密码"
-                             autocomplete="off"
-                             class="layui-input"
-                      />
-                    </div>
-                    <div class="layui-form-mid layui-word-aux">6到16个字符</div>
-                  </div>
-                  <div class="layui-row">
-                    <span style="color: #c00;">{{errors.first('password')}}</span>
-                  </div>
-                </div>
-                <div class="layui-form-item">
-                  <div class="layui-row">
-                    <label for="S_repassword" class="layui-form-label">确认密码</label>
-                    <div class="layui-input-inline">
-                      <input type="password"
-                             id="S_repassword"
-                             name="repassword"
-                             v-model="repassword"
-                             v-validate="'required|min:6|max:16|confirmed:password'"
-                             placeholder="请输入密码"
-                             autocomplete="off"
-                             class="layui-input"
-                      />
-                    </div>
-                  </div>
-                  <div class="layui-row">
-                    <span style="color: #c00;">{{errors.first('repassword')}}</span>
-                  </div>
-                </div>
-                <div class="layui-form-item">
-                  <div class="layui-row">
-                    <label for="S_code" class="layui-form-label">验证码</label>
+                  <validation-provider name="name" rules="required|min:4" v-slot="{errors}">
                     <div class="layui-input-inline">
                       <input type="text"
-                             id="S_code"
-                             name="code"
-                             v-model="code"
-                             v-validate="'required|length:6'"
-                             placeholder="请输入验证码"
+                             id="S_name"
+                             name="name"
+                             v-model="name"
+                             placeholder="请输入昵称"
                              autocomplete="off"
                              class="layui-input"
                       />
                     </div>
-                    <div class>
-                      <span class="svg" style="color: #c00;" @click="_getCode()" v-html="svg"></span>
+                    <div class="layui-form-mid">
+                      <span style="color: #c00;">{{errors[0]}}</span>
                     </div>
-                  </div>
-                  <div class="layui-row">
-                    <span style="color: #c00;">{{errors.first('code')}}</span>
-                  </div>
+                  </validation-provider>
+                </div>
+                <div class="layui-form-item">
+                  <validation-provider name="password" rules="required|min:6|max:16" v-slot="{errors}">
+                    <div class="layui-row">
+                      <label for="S_password" class="layui-form-label">密码</label>
+                      <div class="layui-input-inline">
+                        <input type="password"
+                               id="S_password"
+                               name="password"
+                               v-model="password"
+                               ref="password"
+                               placeholder="请输入密码"
+                               autocomplete="off"
+                               class="layui-input"
+                        />
+                      </div>
+                      <div class="layui-form-mid layui-word-aux">6到16个字符</div>
+                    </div>
+                    <div class="layui-row">
+                      <span style="color: #c00;">{{errors[0]}}</span>
+                    </div>
+                  </validation-provider>
+                </div>
+                <div class="layui-form-item">
+                  <validation-provider name="password" rules="required|min:6|max:16|confirmed:password"
+                                       v-slot="{errors}">
+                    <div class="layui-row">
+                      <label for="S_repassword" class="layui-form-label">确认密码</label>
+                      <div class="layui-input-inline">
+                        <input type="password"
+                               id="S_repassword"
+                               name="repassword"
+                               v-model="repassword"
+                               placeholder="请输入密码"
+                               autocomplete="off"
+                               class="layui-input"
+                        />
+                      </div>
+                    </div>
+                    <div class="layui-row">
+                      <span style="color: #c00;">{{errors[0]}}</span>
+                    </div>
+                  </validation-provider>
+                </div>
+                <div class="layui-form-item">
+                  <validation-provider name="code" rules="required|length:6" v-slot="{errors}">
+                    <div class="layui-row">
+                      <label for="S_code" class="layui-form-label">验证码</label>
+                      <div class="layui-input-inline">
+                        <input type="text"
+                               id="S_code"
+                               name="code"
+                               v-model="code"
+                               placeholder="请输入验证码"
+                               autocomplete="off"
+                               class="layui-input"
+                        />
+                      </div>
+                      <div class>
+                        <span class="svg" style="color: #c00;" @click="_getCode()" v-html="svg"></span>
+                      </div>
+                    </div>
+                    <div class="layui-row">
+                      <span style="color: #c00;">{{errors[0]}}</span>
+                    </div>
+                  </validation-provider>
                 </div>
                 <div class="layui-form-item">
                   <button class="layui-btn" lay-filter="*" lay-submit>立即注册</button>
@@ -138,9 +144,13 @@
 
 <script>
 import { getCode } from '@/api/login'
+import { ValidationProvider } from 'vee-validate'
 
 export default {
   name: 'Reg',
+  components: {
+    ValidationProvider
+  },
   data () {
     return {
       username: '',
