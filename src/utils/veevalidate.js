@@ -34,6 +34,9 @@ localize('zh_CN', {
       min: (field, { length }) => {
         return `请在${field}输入至少${length}个字符`
       }
+    },
+    password: {
+      confirmed: '两次密码输入不一致'
     }
   }
 })

@@ -9,133 +9,135 @@
           <li class="layui-this">注册</li>
         </ul>
         <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
-          <div class="layui-tab-item layui-show">
-            <div class="layui-form layui-form-pane">
-              <form method="post">
-                <div class="layui-form-item">
-                  <validation-provider name="email" rules="required|email" v-slot="{errors}">
-                    <div class="layui-row">
-                      <label for="S_username" class="layui-form-label">用户名</label>
+          <validation-observer name="username" ref="observer" v-slot="{ validate }">
+            <div class="layui-tab-item layui-show">
+              <div class="layui-form layui-form-pane">
+                <form method="post">
+                  <div class="layui-form-item">
+                    <validation-provider name="username" rules="required|email" v-slot="{errors}">
+                      <div class="layui-row">
+                        <label class="layui-form-label" for="S_username">用户名</label>
+                        <div class="layui-input-inline">
+                          <input autocomplete="off"
+                                 class="layui-input"
+                                 id="S_username"
+                                 name="username"
+                                 placeholder="请输入用户名"
+                                 type="text"
+                                 v-model="username"
+                          />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">将会成为您唯一的登入名</div>
+                      </div>
+                      <div class="layui-row">
+                        <span style="color: #c00;">{{errors[0]}}</span>
+                      </div>
+                    </validation-provider>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label" for="S_name">昵称</label>
+                    <validation-provider name="name" rules="required|min:4" v-slot="{errors}">
                       <div class="layui-input-inline">
-                        <input type="text"
-                               id="S_username"
-                               name="username"
-                               v-model="username"
-                               placeholder="请输入用户名"
-                               autocomplete="off"
+                        <input autocomplete="off"
                                class="layui-input"
+                               id="S_name"
+                               name="name"
+                               placeholder="请输入昵称"
+                               type="text"
+                               v-model="name"
                         />
                       </div>
-                      <div class="layui-form-mid layui-word-aux">将会成为您唯一的登入名</div>
-                    </div>
-                    <div class="layui-row">
-                      <span style="color: #c00;">{{errors[0]}}</span>
-                    </div>
-                  </validation-provider>
-                </div>
-                <div class="layui-form-item">
-                  <label for="S_name" class="layui-form-label">昵称</label>
-                  <validation-provider name="name" rules="required|min:4" v-slot="{errors}">
-                    <div class="layui-input-inline">
-                      <input type="text"
-                             id="S_name"
-                             name="name"
-                             v-model="name"
-                             placeholder="请输入昵称"
-                             autocomplete="off"
-                             class="layui-input"
-                      />
-                    </div>
-                    <div class="layui-form-mid">
-                      <span style="color: #c00;">{{errors[0]}}</span>
-                    </div>
-                  </validation-provider>
-                </div>
-                <div class="layui-form-item">
-                  <validation-provider name="password" rules="required|min:6|max:16" v-slot="{errors}">
-                    <div class="layui-row">
-                      <label for="S_password" class="layui-form-label">密码</label>
-                      <div class="layui-input-inline">
-                        <input type="password"
-                               id="S_password"
-                               name="password"
-                               v-model="password"
-                               ref="password"
-                               placeholder="请输入密码"
-                               autocomplete="off"
-                               class="layui-input"
-                        />
+                      <div class="layui-form-mid">
+                        <span style="color: #c00;">{{errors[0]}}</span>
                       </div>
-                      <div class="layui-form-mid layui-word-aux">6到16个字符</div>
-                    </div>
-                    <div class="layui-row">
-                      <span style="color: #c00;">{{errors[0]}}</span>
-                    </div>
-                  </validation-provider>
-                </div>
-                <div class="layui-form-item">
-                  <validation-provider name="password" rules="required|min:6|max:16|confirmed:password"
-                                       v-slot="{errors}">
-                    <div class="layui-row">
-                      <label for="S_repassword" class="layui-form-label">确认密码</label>
-                      <div class="layui-input-inline">
-                        <input type="password"
-                               id="S_repassword"
-                               name="repassword"
-                               v-model="repassword"
-                               placeholder="请输入密码"
-                               autocomplete="off"
-                               class="layui-input"
-                        />
+                    </validation-provider>
+                  </div>
+                  <div class="layui-form-item">
+                    <validation-provider name="password" rules="required|min:6|max:16|confirmed:confirmation"
+                                         v-slot="{errors}">
+                      <div class="layui-row">
+                        <label class="layui-form-label" for="S_password">密码</label>
+                        <div class="layui-input-inline">
+                          <input autocomplete="off"
+                                 class="layui-input"
+                                 id="S_password"
+                                 name="password"
+                                 placeholder="请输入密码"
+                                 ref="password"
+                                 type="password"
+                                 v-model="password"
+                          />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">6到16个字符</div>
                       </div>
-                    </div>
-                    <div class="layui-row">
-                      <span style="color: #c00;">{{errors[0]}}</span>
-                    </div>
-                  </validation-provider>
-                </div>
-                <div class="layui-form-item">
-                  <validation-provider name="code" rules="required|length:6" v-slot="{errors}">
-                    <div class="layui-row">
-                      <label for="S_code" class="layui-form-label">验证码</label>
-                      <div class="layui-input-inline">
-                        <input type="text"
-                               id="S_code"
-                               name="code"
-                               v-model="code"
-                               placeholder="请输入验证码"
-                               autocomplete="off"
-                               class="layui-input"
-                        />
+                      <div class="layui-row">
+                        <span style="color: #c00;">{{errors[0]}}</span>
                       </div>
-                      <div class>
-                        <span class="svg" style="color: #c00;" @click="_getCode()" v-html="svg"></span>
+                    </validation-provider>
+                  </div>
+                  <div class="layui-form-item">
+                    <validation-provider v-slot="{errors}" vid="confirmation">
+                      <div class="layui-row">
+                        <label class="layui-form-label" for="S_repassword">确认密码</label>
+                        <div class="layui-input-inline">
+                          <input autocomplete="off"
+                                 class="layui-input"
+                                 id="S_repassword"
+                                 name="repassword"
+                                 placeholder="请输入密码"
+                                 type="password"
+                                 v-model="repassword"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div class="layui-row">
-                      <span style="color: #c00;">{{errors[0]}}</span>
-                    </div>
-                  </validation-provider>
-                </div>
-                <div class="layui-form-item">
-                  <button class="layui-btn" lay-filter="*" lay-submit>立即注册</button>
-                </div>
-                <div class="layui-form-item fly-form-app">
-                  <span>或者直接使用社交账号快捷注册</span>
-                  <a href
-                     onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})"
-                     class="iconfont icon-qq"
-                     title="QQ登入"
-                  ></a>
-                  <a href
-                     onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})"
-                     class="iconfont icon-weibo"
-                     title="微博登入"
-                  ></a>
-                </div>
-              </form>
+                      <div class="layui-row">
+                        <span style="color: #c00;">{{errors[0]}}</span>
+                      </div>
+                    </validation-provider>
+                  </div>
+                  <div class="layui-form-item">
+                    <validation-provider name="code" rules="required|length:6" v-slot="{errors}">
+                      <div class="layui-row">
+                        <label class="layui-form-label" for="S_code">验证码</label>
+                        <div class="layui-input-inline">
+                          <input autocomplete="off"
+                                 class="layui-input"
+                                 id="S_code"
+                                 name="code"
+                                 placeholder="请输入验证码"
+                                 type="text"
+                                 v-model="code"
+                          />
+                        </div>
+                        <div class>
+                          <span @click="_getCode()" class="svg" style="color: #c00;" v-html="svg"></span>
+                        </div>
+                      </div>
+                      <div class="layui-row">
+                        <span style="color: #c00;">{{errors[0]}}</span>
+                      </div>
+                    </validation-provider>
+                  </div>
+                  <div class="layui-form-item">
+                    <button @click="validate().then(submit)" class="layui-btn" type="button">立即注册</button>
+                  </div>
+                  <div class="layui-form-item fly-form-app">
+                    <span>或者直接使用社交账号快捷注册</span>
+                    <a class="iconfont icon-qq"
+                       href
+                       onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})"
+                       title="QQ登入"
+                    ></a>
+                    <a class="iconfont icon-weibo"
+                       href
+                       onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})"
+                       title="微博登入"
+                    ></a>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
+          </validation-observer>
         </div>
       </div>
     </div>
@@ -143,13 +145,15 @@
 </template>
 
 <script>
-import { getCode } from '@/api/login'
-import { ValidationProvider } from 'vee-validate'
+import { getCode, reg } from '@/api/login'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import { v4 as uuid } from 'uuid'
 
 export default {
   name: 'Reg',
   components: {
-    ValidationProvider
+    ValidationProvider,
+    ValidationObserver
   },
   data () {
     return {
@@ -162,13 +166,54 @@ export default {
     }
   },
   mounted () {
+    let sid = ''
+    if (localStorage.getItem('sid')) {
+      sid = localStorage.getItem('sid')
+    } else {
+      sid = uuid()
+      localStorage.setItem('sid', sid)
+    }
+    this.$store.commit('setSid', sid)
     this._getCode()
   },
   methods: {
     _getCode () {
-      getCode().then((res) => {
+      const sid = this.$store.state.sid
+      getCode(sid).then((res) => {
         if (res.code === 200) {
           this.svg = res.data
+        }
+      })
+    },
+    async submit () {
+      // 判断校验是否通过
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
+      }
+      reg({
+        username: this.username,
+        password: this.password,
+        name: this.name,
+        code: this.code,
+        sid: this.$store.state.sid
+      }).then((res) => {
+        if (res.code === 200) {
+          this.username = ''
+          this.password = ''
+          this.repassword = ''
+          this.name = ''
+          this.code = ''
+          requestAnimationFrame(() => {
+            this.$refs.observer.reset()
+          })
+          // 跳转到登录界面，让用户登录
+          this.$alert('注册成功')
+          setTimeout(() => {
+            this.$router.push('/login')
+          }, 1000)
+        } else {
+          this.$refs.observer.setErrors(res.msg)
         }
       })
     }
