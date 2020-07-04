@@ -1,29 +1,17 @@
-import axios from 'axios'
+/**
+ * User: soalin
+ * Date: 2020/7/1
+ * Time: 20:10
+ * Desc: 登录接口
+ */
+import axios from '@/utils/request'
 
-export const getCode = async () => {
-  let result = ''
-  try {
-    result = await axios.get('/getCaptcha')
-    if (result.status === 200) {
-      return result.data
-    }
-  } catch (e) {
-    console.error(e)
-  }
-  return result
+export const getCode = () => {
+  return axios.get('/getCaptcha')
 }
 
-export const forget = async option => {
-  let result = ''
-  try {
-    result = await axios.post('/forget', {
-      ...option
-    })
-    if (result.status === 200) {
-      return result.data
-    }
-  } catch (e) {
-    console.error(e)
-  }
-  return result
+export const forget = option => {
+  return axios.post('/forget', {
+    ...option
+  })
 }
