@@ -8,7 +8,7 @@
   <div class="layui-container">
     <div class="layui-row layui-col-space15">
       <div class="layui-col-md8">
-        list
+        <list></list>
       </div>
       <div class="layui-col-md4">
         <tips></tips>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import List from '@/components/contents/List'
 import Tips from '@/components/sidebar/Tips'
 import Sign from '@/components/sidebar/Sign'
 import HotList from '@/components/sidebar/HotList'
@@ -31,6 +32,7 @@ import Links from '@/components/sidebar/Links'
 export default {
   name: 'Index',
   components: {
+    List,
     Tips,
     Sign,
     HotList,

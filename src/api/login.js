@@ -2,7 +2,7 @@
  * User: soalin
  * Date: 2020/7/1
  * Time: 20:10
- * Desc: 登录接口
+ * Desc: 登录相关接口
  */
 import axios from '@/utils/request'
 

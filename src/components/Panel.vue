@@ -83,7 +83,7 @@ export default {
           isNew: false
         }
       ],
-      isLogin: false
+      isLogin: this.$store.state.isLogin
     }
   }
 }
