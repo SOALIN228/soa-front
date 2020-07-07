@@ -79,7 +79,7 @@ export default {
         }
       }).catch((err) => {
         if (err) {
-          this.$alert(err.message)
+          this.$alert(err.msg | err.message)
         }
       }).finally(() => {
         // 解锁
