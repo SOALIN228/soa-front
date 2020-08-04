@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { getCode, login } from '@/api/login'
 import { v4 as uuid } from 'uuid'
 
@@ -175,8 +175,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .svg {
-    position: relative;
-    top: -10px;
-  }
 </style>

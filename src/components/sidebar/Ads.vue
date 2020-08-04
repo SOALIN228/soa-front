@@ -6,14 +6,20 @@
 */
 <template>
   <div class="fly-panel">
-    <div class="fly-panel-title">这里可作为广告区域</div>
+    <div class="fly-panel-title">在线课程</div>
     <div class="fly-panel-main">
-      <a class="fly-zanzhu"
-         href="http://layim.layui.com/?from=fly"
-         style="background-color: #5FB878;"
-         target="_blank"
-         time-limit="2017.09.25-2099.01.01"
-      >LayIM 3.0 - layui 旗舰之作</a>
+      <a
+        class="fly-zanzhu"
+        href="https://class.imooc.com/sale/webfullstack?mc_marking=1eb5ce0be2ada8da4a6387b391f00b92&mc_channel=syzcjj1"
+        style="background-color: #5FB878;"
+        target="_blank"
+      >大前端-更高层面进阶前端</a>
+      <a
+        class="fly-zanzhu"
+        href="https://www.imooc.com/learn/1091"
+        style="background-color: #5FB878;"
+        target="_blank"
+      >3小时速成 Vue2.x 核心技术</a>
     </div>
   </div>
 </template>

@@ -9,9 +9,7 @@
     <ul class="fly-list">
       <li :key="`listitem${index}`" v-for="(item,index) in items">
         <a class="fly-avatar" href="">
-          <img alt="贤心"
-               src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          />
+          <img :src="item.uid.pic" alt="贤心"/>
         </a>
         <h2>
           <a class="layui-badge">{{item.catalog}}</a>
@@ -42,7 +40,9 @@
                 :key="'tag' + index"
                 class="layui-badge"
                 v-for="(tag, index) in item.tags"
-          >{{tag.name}}</span>
+          >
+            {{tag.name}}
+          </span>
         </div>
       </li>
     </ul>

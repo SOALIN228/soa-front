@@ -8,7 +8,7 @@
   <div class="layui-container">
     <div class="layui-row layui-col-space15">
       <div class="layui-col-md8">
-        list
+        <list></list>
       </div>
       <div class="layui-col-md4">
         <hot-list></hot-list>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import List from '@/components/contents/List'
 import HotList from '@/components/sidebar/HotList'
 import Ads from '@/components/sidebar/Ads'
 import Links from '@/components/sidebar/Links'
@@ -27,6 +28,7 @@ import Links from '@/components/sidebar/Links'
 export default {
   name: 'Template1',
   components: {
+    List,
     HotList,
     Ads,
     Links

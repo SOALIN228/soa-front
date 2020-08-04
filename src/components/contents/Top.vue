@@ -1,49 +1,44 @@
 /**
 * User: soalin
 * Date: 2020/7/7
-* Time: 08:06
+* Time: 22:50
 * Desc:
 */
 <template>
-  <div class="fly-panel" style="margin-bottom: 0;">
+  <div class="fly-panel" v-show="list.length > 0">
     <div class="fly-panel-title fly-filter">
-      <a :class="{'layui-this': status=== '' && tag === ''}" @click.prevent="search">综合</a>
-      <span class="fly-mid"></span>
-      <a :class="{'layui-this': status === '0'}" @click.prevent="search(0)">未结</a>
-      <span class="fly-mid"></span>
-      <a :class="{'layui-this': status === '1'}" @click.prevent="search(1)">已结</a>
-      <span class="fly-mid"></span>
-      <a :class="{'layui-this': status === '' && tag === '精华'}" @click.prevent="search(2)">精华</a>
-      <span class="fly-filter-right layui-hide-xs">
-        <a :class="{'layui-this': sort === 'created'}" @click.prevent="search(3)">按最新</a>
-        <span class="fly-mid"></span>
-        <a :class="{'layui-this': sort === 'answer'}" @click.prevent="search(4)">按热议</a>
-      </span>
+      <a>置顶</a>
+      <a class="layui-hide-sm layui-show-xs-block fly-right"
+         href="#signin"
+         id="LAY_goSignin"
+         style="color: #FF5722;"
+      >去签到</a>
     </div>
-    <list-item :isEnd="isEnd" :list="list" @nextPage="nextPage"></list-item>
+    <list-item :isShow="false" :list="list"></list-item>
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/content'
 import ListItem from '@/components/contents/ListItem'
+import { getList } from '@/api/content'
 
 export default {
-  name: 'List',
+  name: 'Top',
   components: {
     ListItem
   },
   data () {
     return {
-      isEnd: false, // 是否为请求最后一页
-      isRepeat: false, // 是否已发送过请求
-      current: '', // 切换list 请求类型
       status: '',
       tag: '',
       sort: 'created',
       page: 0,
       limit: 20,
+      isTop: 1,
       catalog: '',
+      isEnd: false,
+      isRepeat: false,
+      current: '',
       list: []
     }
   },
@@ -83,7 +78,7 @@ export default {
       this.isRepeat = true
       const options = {
         catalog: this.catalog,
-        isTop: 0,
+        isTop: this.isTop,
         page: this.page,
         limit: this.limit,
         sort: this.sort,
@@ -114,42 +109,6 @@ export default {
     nextPage () {
       this.page++
       this._getList()
-    },
-    search (val) {
-      if (typeof val === 'undefined' && this.current === '') {
-        return
-      }
-      this.current = val
-      switch (val) {
-        // 未结贴
-        case 0:
-          this.status = '0'
-          this.tag = ''
-          break
-        // 已结贴
-        case 1:
-          this.status = '1'
-          this.tag = ''
-          break
-        // 查询"精华"标签
-        case 2:
-          this.status = ''
-          this.tag = '精华'
-          break
-        // 按照时间去查询
-        case 3:
-          this.sort = 'created'
-          break
-        // 按照评论数去查询
-        case 4:
-          this.sort = 'answer'
-          break
-        // 综合查询
-        default:
-          this.status = ''
-          this.tag = ''
-          this.current = ''
-      }
     }
   }
 }

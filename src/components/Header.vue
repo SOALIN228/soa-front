@@ -2,7 +2,7 @@
   <div class="fly-header layui-bg-black">
     <div class="layui-container">
       <a class="fly-logo" href="/">
-        <img src="../assets/logo-2.png" alt="layui"/>
+        <img src="../assets/img/logo-2.png" alt="layui" />
       </a>
       <ul class="layui-nav fly-nav layui-hide-xs">
         <li class="layui-nav-item layui-this">
@@ -11,7 +11,7 @@
           </a>
         </li>
         <li class="layui-nav-item">
-          <a href="/">
+          <a href="case/case.html">
             <i class="iconfont icon-iconmingxinganli"></i>案例
           </a>
         </li>
@@ -25,26 +25,28 @@
       <ul class="layui-nav fly-nav-user">
         <!-- 未登入的状态 -->
         <li class="layui-nav-item">
-          <a class="iconfont icon-touxiang layui-hide-xs" href="/"></a>
+          <router-link class="iconfont icon-touxiang layui-hide-xs" to="/user123123"></router-link>
         </li>
         <li class="layui-nav-item">
-          <a href="/">登入</a>
+          <router-link :to="{name: 'login'}">登入</router-link>
         </li>
         <li class="layui-nav-item">
-          <a href="/">注册</a>
+          <router-link :to="{name: 'reg'}">注册</router-link>
         </li>
         <li class="layui-nav-item layui-hide-xs">
-          <a href
-             onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})"
-             title="QQ登入"
-             class="iconfont icon-qq"
+          <a
+            class="iconfont icon-qq"
+            href
+            onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})"
+            title="QQ登入"
           ></a>
         </li>
         <li class="layui-nav-item layui-hide-xs">
-          <a href
-             onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})"
-             title="微博登入"
-             class="iconfont icon-weibo"
+          <a
+            class="iconfont icon-weibo"
+            href
+            onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})"
+            title="微博登入"
           ></a>
         </li>
       </ul>
