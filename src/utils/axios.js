@@ -17,14 +17,13 @@ class HttpRequest {
 
   // 获取axios配置
   getInsideConfig () {
-    const config = {
+    return {
       baseUrl: this.baseUrl,
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
       },
       timeout: 10000
     }
-    return config
   }
 
   /**
@@ -43,8 +42,9 @@ class HttpRequest {
   interceptors (instance) {
     // 请求拦截器
     instance.interceptors.request.use((config) => {
-      // 处理请求地址
+      // 生成请求key
       const key = config.url + '&' + config.method
+      // 验证请求是否重复，如果key在pending对列中，取消上一次请求
       this.removePending(key, true)
       config.cancelToken = new CancelToken((c) => {
         this.pending[key] = c
@@ -58,12 +58,12 @@ class HttpRequest {
     // 响应请求的拦截器
     instance.interceptors.response.use((res) => {
       const key = res.config.url + '&' + res.config.method
+      // 请求完成，在队列中删除这次请求
       this.removePending(key)
       if (res.status === 200) {
         return Promise.resolve(res.data)
-      } else {
-        return Promise.reject(res)
       }
+      return Promise.reject(res)
     }, (err) => {
       errorHandle(err)
       return Promise.reject(err)
@@ -81,16 +81,16 @@ class HttpRequest {
   get (url, config) {
     const options = Object.assign({
       method: 'get',
-      url: url
+      url
     }, config)
     return this.request(options)
   }
 
-  post (url, data) {
+  post (url, data = {}) {
     return this.request({
       method: 'post',
-      url: url,
-      data: data
+      url,
+      data
     })
   }
 }
