@@ -8,72 +8,72 @@
             <router-link :to="{name: 'reg'}">注册</router-link>
           </li>
         </ul>
-        <div class="layui-form layui-tab-content" id="S_login" style="padding: 20px 0;">
+        <div id="S_login" class="layui-form layui-tab-content" style="padding: 20px 0;">
           <validation-observer ref="observer" v-slot="{validate}">
             <div class="layui-tab-item layui-show">
               <div class="layui-form layui-form-pane">
                 <form method="post">
                   <div class="layui-form-item">
                     <label class="layui-form-label" for="S_username">用户名</label>
-                    <validation-provider name="email" ref="usernameFailed" rules="required|email" v-slot="{errors}">
+                    <validation-provider ref="usernameFailed" v-slot="{errors}" name="email" rules="required|email">
                       <div class="layui-input-inline">
-                        <input autocomplete="off"
+                        <input id="S_username"
+                               v-model="username"
+                               autocomplete="off"
                                class="layui-input"
-                               id="S_username"
                                name="username"
                                placeholder="请输入用户名"
                                type="text"
-                               v-model="username"
                         />
                       </div>
                       <div class="layui-form-mid">
-                        <span style="color: #c00;">{{errors[0]}}</span>
+                        <span style="color: #c00;">{{ errors[0] }}</span>
                       </div>
                     </validation-provider>
                   </div>
                   <div class="layui-form-item">
                     <label class="layui-form-label" for="S_password">密码</label>
-                    <validation-provider name="password" rules="required|min:6" v-slot="{errors}">
+                    <validation-provider v-slot="{errors}" name="password" rules="required|min:6">
                       <div class="layui-input-inline">
-                        <input autocomplete="off"
+                        <input id="S_password"
+                               v-model="password"
+                               autocomplete="off"
                                class="layui-input"
-                               id="S_password"
                                name="password"
                                placeholder="请输入密码"
                                type="password"
-                               v-model="password"
                         />
                       </div>
                       <div class="layui-form-mid">
-                        <span style="color: #c00;">{{errors[0]}}</span>
+                        <span style="color: #c00;">{{ errors[0] }}</span>
                       </div>
                     </validation-provider>
                   </div>
                   <div class="layui-form-item">
-                    <validation-provider name="code" ref="codeFailed" rules="required|length:6" v-slot="{errors}">
+                    <validation-provider ref="codeFailed" v-slot="{errors}" name="code" rules="required|length:6">
                       <div class="layui-row">
                         <label class="layui-form-label" for="S_code">验证码</label>
                         <div class="layui-input-inline">
-                          <input autocomplete="off"
+                          <input id="S_code"
+                                 v-model="code"
+                                 autocomplete="off"
                                  class="layui-input"
-                                 id="S_code"
                                  name="code"
                                  placeholder="请输入验证码"
                                  type="text"
-                                 v-model="code"
                           />
                         </div>
                         <div class>
-                          <span @click="_getCode()" class="svg" style="color: #c00;" v-html="svg"></span>
+                          <span class="svg" style="color: #c00;" @click="_getCode()" v-html="svg"></span>
                         </div>
                       </div>
                       <div class="layui-form-mid">
-                        <span style="color: #c00;">{{errors[0]}}</span>
+                        <span style="color: #c00;">{{ errors[0] }}</span>
                       </div>
                     </validation-provider>
                   </div>
                   <div class="layui-form-item">
-                    <button @click="validate().then(submit)" class="layui-btn" type="button">立即登录</button>
+                    <button class="layui-btn" type="button" @click="validate().then(submit)">立即登录</button>
                     <span style="padding-left:20px;">
                       <router-link :to="{name: 'forget'}">忘记密码？</router-link>
                     </span>
@@ -121,6 +121,7 @@ export default {
     }
   },
   mounted () {
+    // 获取uuid
     let sid = ''
     if (localStorage.getItem('sid')) {
       sid = localStorage.getItem('sid')
@@ -129,6 +130,7 @@ export default {
       localStorage.setItem('sid', sid)
     }
     this.$store.commit('setSid', sid)
+    // 根据uuid生成验证码
     this._getCode()
   },
   methods: {
@@ -153,21 +155,18 @@ export default {
         sid: this.$store.state.sid
       }).then(res => {
         if (res.code === 200) {
-          this.username = ''
-          this.password = ''
-          this.code = ''
+          // 重置form表单
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
           })
-        } else if (res.code === 401) {
-          this.$refs.codeFailed.setErrors([res.msg])
-        } else if (res.code === 404) {
-          this.$refs.usernameFailed.setErrors([res.msg])
-          this.$alert(res.msg)
+          return
         }
+        // 展示错误信息
+        this.$refs.codeFailed.setErrors([res.msg])
+        this.$alert(res.msg)
       }).catch(err => {
-        console.log(err.response.data)
-        this.$alert('服务器错误')
+        const data = err.response.data
+        this.$alert(data.code === 500 ? '用户名密码校验失败，请检查！' : '服务器错误')
       })
     }
   }
