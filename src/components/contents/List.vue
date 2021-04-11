@@ -7,7 +7,7 @@
 <template>
   <div class="fly-panel" style="margin-bottom: 0;">
     <div class="fly-panel-title fly-filter">
-      <a :class="{'layui-this': status=== '' && tag === ''}" @click.prevent="search">综合</a>
+      <a :class="{'layui-this': status=== '' && tag === ''}" @click.prevent="search()">综合</a>
       <span class="fly-mid"></span>
       <a :class="{'layui-this': status === '0'}" @click.prevent="search(0)">未结</a>
       <span class="fly-mid"></span>
@@ -25,98 +25,39 @@
 </template>
 
 <script>
-import { getList } from '@/api/content'
 import ListItem from '@/components/contents/ListItem'
+import listMix from '@/mixin/list'
 
 export default {
   name: 'List',
   components: {
     ListItem
   },
+  mixins: [listMix],
   data () {
-    return {
-      isEnd: false, // 是否为请求最后一页
-      isRepeat: false, // 是否已发送过请求
-      current: '', // 切换list 请求类型
-      status: '',
-      tag: '',
-      sort: 'created',
-      page: 0,
-      limit: 20,
-      catalog: '',
-      list: []
-    }
+    return {}
   },
   watch: {
-    current (newval, oldval) {
+    /* tab切换触发 */
+    current () {
       this.init()
     },
-    '$route' (newval, oldval) {
+    /* 动态路由切换触发 */
+    '$route' () {
       const catalog = this.$route.params.catalog
-      if (typeof catalog !== 'undefined' && catalog !== '') {
+      if (catalog) {
         this.catalog = catalog
       }
       this.init()
     }
   },
-  mounted () {
-    const catalog = this.$route.params.catalog
-    if (typeof catalog !== 'undefined' && catalog !== '') {
-      this.catalog = catalog
-    }
-    this._getList()
-  },
   methods: {
-    init () {
-      this.page = 0
-      this.lists = []
-      this.isEnd = false
-      this._getList()
-    },
-    _getList () {
-      // 上一个请求还未完成
-      if (this.isRepeat) return
-      // 到达最后一页
-      if (this.isEnd) return
-
-      // 加锁
-      this.isRepeat = true
-      const options = {
-        catalog: this.catalog,
-        isTop: 0,
-        page: this.page,
-        limit: this.limit,
-        sort: this.sort,
-        tag: this.tag,
-        status: this.status
-      }
-      getList(options).then(res => {
-        if (res.code === 200) {
-          // 是否为最后一页
-          if (res.data.length < this.limit) {
-            this.isEnd = true
-          }
-          if (this.list.length === 0) {
-            this.list = res.data
-          } else {
-            this.list = this.list.concat(res.data)
-          }
-        }
-      }).catch((err) => {
-        if (err) {
-          this.$alert(err.msg || err.message)
-        }
-      }).finally(() => {
-        // 解锁
-        this.isRepeat = false
-      })
-    },
-    nextPage () {
-      this.page++
-      this._getList()
-    },
     search (val) {
+      // 空参和综合查询，状态初始化，查询所有数据
       if (typeof val === 'undefined' && this.current === '') {
+        this.status = ''
+        this.tag = ''
+        this.current = ''
         return
       }
       this.current = val
@@ -144,11 +85,6 @@ export default {
         case 4:
           this.sort = 'answer'
           break
-        // 综合查询
-        default:
-          this.status = ''
-          this.tag = ''
-          this.current = ''
       }
     }
   }

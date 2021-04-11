@@ -11,12 +11,15 @@
         <router-link class="layui-hide-xs" tag="li" to="/">
           <a>首页</a>
         </router-link>
-        <router-link :key="'panel'+ index" :to="item.path" tag="li" v-for="(item,index) in lists">
+        <router-link v-for="(item,index) in lists" :key="'panel'+ index" :to="item.path" tag="li">
           <a>
-            {{item.name}}
-            <span class="layui-badge-dot" v-if="item.isNew"></span>
+            {{ item.name }}
+            <span v-if="item.isNew" class="layui-badge-dot"></span>
           </a>
         </router-link>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
+          <span class="fly-mid"></span>
+        </li>
         <!-- 用户登入后显示 -->
         <template v-if="isLogin">
           <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
@@ -30,7 +33,6 @@
           </li>
         </template>
       </ul>
-
       <div class="fly-column-right layui-hide-xs">
         <span class="fly-search">
           <i class="layui-icon"></i>

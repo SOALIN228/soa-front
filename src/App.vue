@@ -25,7 +25,7 @@ export default {
 // 公用样式
 .svg {
   position: relative;
-  // top: -4px;
+
   svg {
     position: absolute;
     top: -10px;

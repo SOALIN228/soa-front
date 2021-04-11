@@ -36,7 +36,7 @@ export default {
   mounted () {
     getLinks().then((res) => {
       if (res.code === 200) {
-        this.lists = res.data
+        this.list = res.data
       }
     })
   }

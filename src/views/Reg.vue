@@ -96,7 +96,7 @@
                     </validation-provider>
                   </div>
                   <div class="layui-form-item">
-                    <validation-provider name="code" rules="required|length:6" v-slot="{errors}">
+                    <validation-provider name="code" rules="required|length:4" v-slot="{errors}">
                       <div class="layui-row">
                         <label class="layui-form-label" for="S_code">验证码</label>
                         <div class="layui-input-inline">
@@ -212,9 +212,9 @@ export default {
           setTimeout(() => {
             this.$router.push('/login')
           }, 1000)
-        } else {
-          this.$refs.observer.setErrors(res.msg)
+          return
         }
+        this.$refs.observer.setErrors(res.msg)
       })
     }
   }

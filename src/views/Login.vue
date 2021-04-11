@@ -50,7 +50,7 @@
                     </validation-provider>
                   </div>
                   <div class="layui-form-item">
-                    <validation-provider ref="codeFailed" v-slot="{errors}" name="code" rules="required|length:6">
+                    <validation-provider ref="codeFailed" v-slot="{errors}" name="code" rules="required|length:4">
                       <div class="layui-row">
                         <label class="layui-form-label" for="S_code">验证码</label>
                         <div class="layui-input-inline">
@@ -155,9 +155,12 @@ export default {
         sid: this.$store.state.sid
       }).then(res => {
         if (res.code === 200) {
+          this.username = ''
+          this.password = ''
+          this.code = ''
           // 重置form表单
           requestAnimationFrame(() => {
-            this.$refs.observer.reset()
+            this.$refs.observer && this.$refs.observer.reset()
           })
           return
         }
