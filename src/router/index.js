@@ -45,6 +45,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  // 设置路由选中样式
   linkExactActiveClass: 'layui-this',
   routes
 })

@@ -155,6 +155,8 @@ export default {
         sid: this.$store.state.sid
       }).then(res => {
         if (res.code === 200) {
+          this.$store.commit('setIsLogin', true)
+          this.$store.commit('setUserInfo', res.data)
           this.username = ''
           this.password = ''
           this.code = ''
@@ -162,6 +164,7 @@ export default {
           requestAnimationFrame(() => {
             this.$refs.observer && this.$refs.observer.reset()
           })
+          this.$router.push({ name: 'index' })
           return
         }
         // 展示错误信息

@@ -23,9 +23,6 @@
         <!-- 用户登入后显示 -->
         <template v-if="isLogin">
           <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
-            <span class="fly-mid"></span>
-          </li>
-          <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
             <a>我发表的贴</a>
           </li>
           <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
