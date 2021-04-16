@@ -15,6 +15,10 @@ export default new Vuex.Store({
     setSid (state, value) {
       state.sid = value
     },
+    setToken (state, value) {
+      state.token = value
+      localStorage.setItem('token', value)
+    },
     // 设置用户的基本信息
     setUserInfo (state, value) {
       if (typeof value !== 'object' || value === null) return

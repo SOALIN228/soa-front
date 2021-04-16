@@ -82,7 +82,7 @@
               </dd>
               <hr style="margin: 5px 0;"/>
               <dd>
-                <a href="javascript: void(0)" style="text-align: center;">退出</a>
+                <a href="javascript: void(0)" style="text-align: center;" @click="logout()">退出</a>
               </dd>
             </dl>
           </li>
@@ -130,6 +130,20 @@ export default {
       this.hoverCtrl = setTimeout(() => {
         this.isHover = false
       }, 500)
+    },
+    logout () {
+      this.$confirm(
+        '确定退出吗？',
+        () => {
+          localStorage.clear()
+          this.$store.commit('setToken', '')
+          this.$store.commit('setUserInfo', {})
+          this.$store.commit('setIsLogin', false)
+          this.$router.push({ name: 'index' })
+        },
+        () => {
+        }
+      )
     }
   }
 }
@@ -140,5 +154,13 @@ export default {
   left: -15px;
   top: -10px;
   margin-left: 15px;
+}
+
+.layui-layer-tips {
+  position: absolute;
+  white-space: nowrap;
+  right: 0;
+  top: 60px;
+  z-index: 2000;
 }
 </style>
